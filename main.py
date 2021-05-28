@@ -12,6 +12,8 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.models as models
 from tools.folder2lmdb import ImageFolderLMDB
+import lmdb
+import pickle
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -67,8 +69,7 @@ def main():
     model = models.__dict__['resnet18'](pretrained=True)
     model_params = model.parameters()
     data_dir = "C:\\Users\\cml\\Downloads\\cats_vs_dogs\\train"
-    data_db = "C:\\Users\\cml\\Downloads\\cats_vs_dogs\\train.lmdb"
-    directory = "C:\\Users\\cml\\Downloads\\cats_vs_dogs"
+    db_path = "C:\\Users\\cml\\Downloads\\cats_vs_dogs\\train.lmdb"
         
     # send model to gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")   
@@ -81,15 +82,18 @@ def main():
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
     
-    # get the size of the db
-    with open(osp.join(directory, 'LMDB_SIZE'), 'r') as fd:
-        data_size = int(fd.read())
-
+    # open the db here to get the length
+    env = lmdb.open(db_path, subdir=osp.isdir(db_path),
+                    readonly=True, lock=False,
+                    readahead=False, meminit=False)
+    with env.begin(write=False, buffers=True) as txn:
+        db_length = pickle.loads(txn.get(b'__len__'))
+    
     for dataset_type in DBS:
         if dataset_type == 'lmdb':
             train_dataset = ImageFolderLMDB(
-                data_db,
-                data_size,
+                db_path,
+                db_length,
                 transforms.Compose([
                     transforms.RandomResizedCrop(64),
                     transforms.RandomHorizontalFlip(),

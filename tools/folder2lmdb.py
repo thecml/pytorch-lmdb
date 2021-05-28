@@ -10,9 +10,9 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 
 class ImageFolderLMDB(data.Dataset):
-    def __init__(self, db_path, db_size, transform=None, target_transform=None):
+    def __init__(self, db_path, lengeth, transform=None, target_transform=None):
         self.db_path = db_path
-        self.db_size = db_size
+        self.length = lengeth
         self.transform = transform
         self.target_transform = target_transform
 
@@ -51,7 +51,7 @@ class ImageFolderLMDB(data.Dataset):
         return img, target
 
     def __len__(self):
-        return self.db_size
+        return self.length
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' + self.db_path + ')'
@@ -150,9 +150,6 @@ def folder2lmdb(dpath, name="train_images", write_frequency=5000, num_workers=0)
         txn.put(b'__keys__', dumps_pickle(keys))
         txn.put(b'__len__', dumps_pickle(len(keys)))
 
-    with open(osp.join(dpath, 'LMDB_SIZE'), 'w') as fd:
-        fd.write(str(len(keys)))
-    
     print("Flushing database ...")
     db.sync()
     db.close()
@@ -166,8 +163,5 @@ if __name__=='__main__':
     parser.add_argument('-p', '--procs', type=int, default=0)
 
     args = parser.parse_args()
-    
-    args.folder = "C:\\Users\\cml\\Downloads\\cats_vs_dogs"
-    args.split = "train"
 
     folder2lmdb(args.folder, num_workers=args.procs, name=args.split)
