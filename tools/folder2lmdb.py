@@ -127,8 +127,9 @@ def folder2lmdb(dpath, name="train_images", write_frequency=5000, num_workers=0)
     isdir = os.path.isdir(lmdb_path)
 
     print("Generate LMDB to %s" % lmdb_path)
+    map_size = 30737418240 # this should be adjusted based on OS/db size
     db = lmdb.open(lmdb_path, subdir=isdir,
-                   map_size=30737418240, readonly=False,
+                   map_size=map_size, readonly=False,
                    meminit=False, map_async=True)
     
     print(len(dataset), len(data_loader))
