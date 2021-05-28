@@ -10,12 +10,18 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 
 class ImageFolderLMDB(data.Dataset):
-    def __init__(self, db_path, lengeth, transform=None, target_transform=None):
+    def __init__(self, db_path, transform=None, target_transform=None):
         self.db_path = db_path
-        self.length = lengeth
         self.transform = transform
         self.target_transform = target_transform
-
+        
+        env = lmdb.open(self.db_path, subdir=osp.isdir(self.db_path),
+                        readonly=True, lock=False,
+                        readahead=False, meminit=False)
+        with env.begin(write=False) as txn:
+            self.length = pickle.loads(txn.get(b'__len__'))
+            self.keys = pickle.loads(txn.get(b'__keys__'))
+        
     def open_lmdb(self):
          self.env = lmdb.open(self.db_path, subdir=osp.isdir(self.db_path),
                               readonly=True, lock=False,
