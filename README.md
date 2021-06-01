@@ -2,7 +2,7 @@
 Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Also works on Windows systems now.
 
 # Speed overview
-Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation.
+Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
 
 ```
 Timings for lmdb (my own implementation)
@@ -16,6 +16,21 @@ Avg data time: 0.017892257291443493
 Avg batch time: 0.1053010200967594  
 Total data time: 3.506882429122925  
 Total batch time: 20.638999938964844
+```
+These are the results using a network file system (NFS) drive:
+
+```
+Timings for lmdb (my own implementation)
+Avg data time: 0.040608997247657
+Avg batch time: 0.06778134983413074
+Total data time: 7.9593634605407715
+Total batch time: 13.285144567489624
+
+Timings for imagefolder: 
+Avg data time: 0.056209570291090985
+Avg batch time: 0.08088788086054277
+Total data time: 11.017075777053833
+Total batch time: 15.854024648666382
 ```
 
 # LMDB 
