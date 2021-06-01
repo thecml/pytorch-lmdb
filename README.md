@@ -66,7 +66,7 @@ loader = DataLoader(dst, batch_size=64)
 ```
 
 ## Run the test tool
-The [test tool](main.py) takes an ImageFolder path and a LMDB database path, runs training on the Dogs vs Cats dataset and output the results in terms of timings. For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and the already created LMDB file is too:
+The [test tool](main.py) takes an ImageFolder path and a LMDB database path, runs training on the Dogs vs Cats dataset and outputs execution times of the two file storage strategies. For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and the already created LMDB file is too:
 
 ```bash
 python main.py -f ~/pytorch-lmdb/data/cats_vs_dogs/train -l ~/pytorch-lmdb/data/cats_vs_dogs/train.lmdb
