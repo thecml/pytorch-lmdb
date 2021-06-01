@@ -1,5 +1,5 @@
 # pytorch-lmdb
-Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Also works on Windows systems now.
+Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Fixed quite a few warnings and made it easier to use via commandline. Tested on both Windows and Linux systems using Python 3.8.
 
 # Speed overview
 Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
