@@ -48,10 +48,11 @@ img-idn | (jpeg_rawn, labeln)
 
 As for details of reading/writing, please refer to [code](folder2lmdb.py).
 
-
 ## Convert `ImageFolder` to `LMDB`
+The converter [code](folder2lmdb.py) can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
+
 ```bash
-python folder2lmdb.py -f ~/torch_data/ -s train
+python folder2lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
 ```
 
 ## ImageFolderLMDB
