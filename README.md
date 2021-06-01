@@ -2,7 +2,7 @@
 Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Also works on Windows systems now.
 
 # Speed overview
-Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results storing data on a local SSD:
+Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
 
 ```
 Timings for lmdb (my own implementation)
