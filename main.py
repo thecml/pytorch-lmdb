@@ -13,7 +13,7 @@ import torchvision.models as models
 from folder2lmdb import ImageFolderLMDB
 
 DBS = ['lmdb', 'imagefolder']
-PRINT_STATUS = True
+PRINT_STATUS = False
 BATCH_SIZE = 128
 
 def main(imagefolder_data_dir, lmdb_data_db):
@@ -140,7 +140,7 @@ class AverageMeter(object):
         self.avg_values.append(self.avg)
 
 def accuracy(output, target, topk=(1,)):
-    """Computes the accuracy over the k top predictions for the  ecified values of k"""
+    """Computes the accuracy over the k top predictions for the specified values of k"""
     with torch.no_grad():
         maxk = max(topk)
         batch_size = target.size(0)
