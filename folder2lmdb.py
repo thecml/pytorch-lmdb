@@ -1,9 +1,8 @@
 import os
 import os.path as osp
-import six
+import io
 import lmdb
 import pickle
-import msgpack
 import torch.utils.data as data
 from PIL import Image
 from torch.utils.data import DataLoader
@@ -40,7 +39,7 @@ class ImageFolderLMDB(data.Dataset):
 
         # load image
         imgbuf = unpacked[0]
-        buf = six.BytesIO()
+        buf = io.BytesIO()
         buf.write(imgbuf[0])
         buf.seek(0)
         img = Image.open(buf).convert('RGB')
