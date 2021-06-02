@@ -10,6 +10,7 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.models as models
 import os.path as osp
+import numpy as np
 import io
 import pickle
 import lmdb
@@ -113,12 +114,21 @@ def main(imagefolder_data_dir, lmdb_data_db):
             train_dataset, batch_size=BATCH_SIZE, shuffle=True,
             num_workers=4, pin_memory=True)
     
-        batch_time, data_time = train(train_loader, model, criterion, optimizer, device)
+        batch_time_avg, data_time_avg = list(), list()
+        batch_time_sum, data_time_sum = 0, 0
+        
+        for _ in range(10):
+            batch_time, data_time = train(train_loader, model, criterion, optimizer, device)
+            batch_time_avg.append(batch_time.avg)
+            data_time_avg.append(data_time.avg)            
+            batch_time_sum += batch_time.sum
+            data_time_sum += data_time.sum
+            
         print(f"Timings for {dataset_type}: ")
-        print(f"Avg data time: {data_time.avg}")
-        print(f"Avg batch time: {batch_time.avg}")
-        print(f"Total data time: {data_time.sum}")
-        print(f"Total batch time: {batch_time.sum}\n")
+        print(f"Avg data time: {np.mean(data_time_avg)}")
+        print(f"Avg batch time: {np.mean(batch_time_avg)}")
+        print(f"Total data time: {data_time_sum}")
+        print(f"Total batch time: {batch_time_sum}\n")
     
 def train(train_loader, model, criterion, optimizer, device, epoch=0):
     batch_time = AverageMeter()
