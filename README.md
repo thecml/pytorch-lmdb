@@ -46,20 +46,20 @@ img-idn | (jpeg_rawn, labeln)
 `__keys__` | [img-id1, img-id2, ... img-idn]
 `__len__` | n
 
-As for details of reading/writing, please refer to [code](folder2lmdb.py).
+As for details of reading/writing, please refer to [code](folder_2_lmdb.py).
 
 ## Convert `ImageFolder` to `LMDB`
-The [folder2lmdb](folder2lmdb.py) script can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
+The [folder_2_lmdb](folder_2_lmdb.py) script can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
 
 ```bash
-python folder2lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
+python folder_2_lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
 ```
 
 ## ImageFolderLMDB
 The usage of `ImageFolderLMDB` is identical to `torchvision.datasets`. 
 
 ```python
-import ImageFolderLMDB
+from image_folder_lmdb import ImageFolderLMDB
 from torch.utils.data import DataLoader
 dst = ImageFolderLMDB(path, transform, target_transform)
 loader = DataLoader(dst, batch_size=64)
