@@ -9,7 +9,7 @@ import torch.utils.data.distributed
 import torchvision
 import torchvision.transforms as transforms
 import torchvision.models as models
-from folder2lmdb import ImageFolderLMDB
+from image_folder_lmdb import ImageFolderLMDB
 
 DBS = ['lmdb', 'imagefolder']
 PRINT_STATUS = False
