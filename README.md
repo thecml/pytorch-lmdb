@@ -5,7 +5,7 @@ Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Fixed 
 Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
 
 ```
-Timings for lmdb (my own implementation)
+Timings for lmdb
 Avg data time: 0.011866736168764075
 Avg batch time: 0.10090051865091129
 Total data time: 2.325880289077759
@@ -20,7 +20,7 @@ Total batch time: 20.638999938964844
 These are the results using a network file system (NFS) drive:
 
 ```
-Timings for lmdb (my own implementation)
+Timings for lmdb
 Avg data time: 0.040608997247657
 Avg batch time: 0.06778134983413074
 Total data time: 7.9593634605407715
