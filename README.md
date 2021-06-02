@@ -1,5 +1,5 @@
 # pytorch-lmdb
-Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Fixed quite a few warnings and made it easier to use via commandline. Tested on both Windows and Linux systems using Python 3.8.
+Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Fixed quite a few warnings and made it easier to use via command line. Tested on both Windows and Linux systems using Python 3.8.
 
 # Speed overview
 Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
@@ -46,27 +46,27 @@ img-idn | (jpeg_rawn, labeln)
 `__keys__` | [img-id1, img-id2, ... img-idn]
 `__len__` | n
 
-As for details of reading/writing, please refer to [code](folder_2_lmdb.py).
+As for details of reading/writing, please refer to [code](folder2lmdb.py).
 
 ## Convert `ImageFolder` to `LMDB`
-The [folder_2_lmdb](folder_2_lmdb.py) script can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
+The [folder2lmdb](folder2lmdb.py) script can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
 
 ```bash
-python folder_2_lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
+python folder2lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
 ```
 
 ## ImageFolderLMDB
 The usage of `ImageFolderLMDB` is identical to `torchvision.datasets`. 
 
 ```python
-from image_folder_lmdb import ImageFolderLMDB
+import ImageFolderLMDB
 from torch.utils.data import DataLoader
 dst = ImageFolderLMDB(path, transform, target_transform)
 loader = DataLoader(dst, batch_size=64)
 ```
 
 ## Run the test tool
-The [test](main.py) script takes an ImageFolder path and a LMDB database path, runs training on the Dogs vs Cats dataset and outputs execution times of the two file storage strategies. For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and the already created LMDB file is too:
+The [main](main.py) script includes the ImageFolderLMDB class. It can be run from command line and takes an ImageFolder path and a LMDB database path, runs training on the Dogs vs Cats dataset and outputs execution times of the two file storage strategies. For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and the already created LMDB file is too:
 
 ```bash
 python main.py -f ~/pytorch-lmdb/data/cats_vs_dogs/train -l ~/pytorch-lmdb/data/cats_vs_dogs/train.lmdb
