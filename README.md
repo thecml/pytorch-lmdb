@@ -5,7 +5,7 @@ Forked from https://github.com/Lyken17/Efficient-PyTorch/ and simplified. Fixed 
 Trained on the Cats versus Dogs dataset avaliable on [Kaggle](https://www.kaggle.com/c/dogs-vs-cats/data). Results compare the torch.ImageFolder and our lmdb implementation. These are the results using a local SSD:
 
 ```
-Timings for lmdb (my own implementation)
+Timings for lmdb
 Avg data time: 0.011866736168764075
 Avg batch time: 0.10090051865091129
 Total data time: 2.325880289077759
@@ -20,7 +20,7 @@ Total batch time: 20.638999938964844
 These are the results using a network file system (NFS) drive:
 
 ```
-Timings for lmdb (my own implementation)
+Timings for lmdb
 Avg data time: 0.040608997247657
 Avg batch time: 0.06778134983413074
 Total data time: 7.9593634605407715
@@ -48,10 +48,11 @@ img-idn | (jpeg_rawn, labeln)
 
 As for details of reading/writing, please refer to [code](folder2lmdb.py).
 
-
 ## Convert `ImageFolder` to `LMDB`
+The [folder2lmdb](folder2lmdb.py) script can convert a default image-label structure to an LMDB file (see above). For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and it has a subfolder called "train":
+
 ```bash
-python folder2lmdb.py -f ~/torch_data/ -s train
+python folder2lmdb.py -f ~/pytorch-lmdb/data/cats_vs_dogs -s "train"
 ```
 
 ## ImageFolderLMDB
@@ -64,3 +65,9 @@ dst = ImageFolderLMDB(path, transform, target_transform)
 loader = DataLoader(dst, batch_size=64)
 ```
 
+## Run the test tool
+The [test](main.py) script takes an ImageFolder path and a LMDB database path, runs training on the Dogs vs Cats dataset and outputs execution times of the two file storage strategies. For example, to run it on Linux, given the Dogs vs Cats dataset is in /data and the already created LMDB file is too:
+
+```bash
+python main.py -f ~/pytorch-lmdb/data/cats_vs_dogs/train -l ~/pytorch-lmdb/data/cats_vs_dogs/train.lmdb
+```
